@@ -34,30 +34,19 @@ app.locals.database = database;
 const indexRoute = require('./routes/index');
 const signinRoute = require('./routes/signin');
 const registerRoute = require('./routes/register');
-// const usersRoute = require('./routes/users');
-// const productsRoute = require('./routes/products');
+const profileRoute = require('./routes/profile');
+const imageRoute = require('./routes/image');
 
 // Mounting the routes
 app.use('/', indexRoute);
 app.use('/signin', signinRoute);
 app.use('/register', registerRoute);
-// app.use('/users', usersRoute);
-// app.use('/products', productsRoute);
-
+app.use('/profile', profileRoute);
+app.use('/image', imageRoute);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 })
-
-/*
-GAMEPLAN
-/ --> res = this is working
-/signin -> POST = success/fail (POST because we're handling a password)
-/register --> POST = user
-/profile/:id --> GET = user
-/image --> PUT = user OR count
-*/
-
 
 /*
 TODO
