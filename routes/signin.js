@@ -1,12 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
-  if (req.body.email === req.app.locals.database.users[0].email && req.body.password === req.app.locals.database.users[0].password) {
-    res.json('success')
-  } else {
-    res.status(400).json('error loggin in');
+const bcrypt = require('bcrypt');
+
+router.post('/', async (req, res) => {
+  try {
+    const users = req.app.locals.database.users
+    const isPassWordMatch = await bcrypt.compare(req.body.password, users[0].password)
+
+    if (req.body.email === users[0].email && isPassWordMatch) {
+      res.json('success')
+    } else {
+      res.status(400).json('error loggin in');
+    }
+    // res.status(200).json('Okay')
+  } catch {
+    res.status(500).json('Internal server error');
   }
+
 });
 
 module.exports = router;

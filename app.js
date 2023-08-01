@@ -7,6 +7,8 @@ const port = 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+const bcrypt = require('bcrypt');
+
 
 const database = {
   users: [
@@ -14,7 +16,7 @@ const database = {
       id: '123',
       name: 'John',
       email: 'john@gmail.com',
-      password: 'cookies',
+      password: "$2b$10$i5KAWwNWo.dSSH.YKAzt1.HQTDff6mx9SJByGjBvw2ausdYydfZBe", //cookies
       entries: 0,
       joined: new Date()
     },
@@ -26,6 +28,13 @@ const database = {
       entries: 0,
       joined: new Date()
     },
+  ],
+  login: [
+    {
+      id: '987',
+      hash: '',
+      email: 'john@gmail.com'
+    }
   ]
 }
 app.locals.database = database;
