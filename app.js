@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const port = 3001;
@@ -7,6 +8,7 @@ const port = 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use(cors());
 const bcrypt = require('bcrypt');
 
 

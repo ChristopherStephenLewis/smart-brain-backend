@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
       entries: 0,
       joined: new Date()
     })
-    res.json(users[users.length-1]);
+    res.json(users[users.length-1]); // remove sending the password back
   } catch {
     res.status(400).send('Internal server error');
   }
