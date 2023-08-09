@@ -1,22 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
+const {db} = require('../db/database');
+
 
 router.put('/', (req, res) => {
   const {id} = req.body; // alternative is: const userId = req.params.id;
-  const users = req.app.locals.database.users
-  let userFound = false;
 
-  users.forEach(user => {
-    if (user.id === id) {
-      userFound = true;
-      user.entries++;
-      return res.json(user.entries);
-    } 
+  db('users').where('id', '=', id)
+  .increment('entries', 1)
+  .returning('entries')
+  .then(entries => {
+    res.json(entries[0].entries);
   })
-  if (!userFound) {
-    res.status(400).json('No such user');
-  }
+  .catch(err => res.status(400).json('unable to get entries'))
+
 });
 
 module.exports = router;

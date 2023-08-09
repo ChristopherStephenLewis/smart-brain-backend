@@ -9,37 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(cors());
-const bcrypt = require('bcrypt');
-
-
-const database = {
-  users: [
-    {
-      id: '123',
-      name: 'John',
-      email: 'john@gmail.com',
-      password: "$2b$10$i5KAWwNWo.dSSH.YKAzt1.HQTDff6mx9SJByGjBvw2ausdYydfZBe", //cookies
-      entries: 0,
-      joined: new Date()
-    },
-    {
-      id: '124',
-      name: 'Dave',
-      email: 'dave@gmail.com',
-      password: 'chaos',
-      entries: 0,
-      joined: new Date()
-    },
-  ],
-  login: [
-    {
-      id: '987',
-      hash: '',
-      email: 'john@gmail.com'
-    }
-  ]
-}
-app.locals.database = database;
 
 // Routes
 const indexRoute = require('./routes/index');

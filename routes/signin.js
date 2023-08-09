@@ -3,21 +3,34 @@ const router = express.Router();
 
 const bcrypt = require('bcrypt');
 
-router.post('/', async (req, res) => {
-  try {
-    const users = req.app.locals.database.users
-    const isPassWordMatch = await bcrypt.compare(req.body.password, users[0].password)
+const {db} = require('../db/database');
 
-    if (req.body.email === users[0].email && isPassWordMatch) {
-      res.json('success')
-    } else {
-      res.status(400).json('error loggin in');
-    }
-    // res.status(200).json('Okay')
-  } catch {
-    res.status(500).json('Internal server error');
+router.post('/', async (req, res) => {
+  const {email, password} = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json('Invalid input data');
   }
 
+  try {
+    const loginUser = await db('login').select('*').where('email', email).first();
+    // const user = await db('users').select('*').where('email', email).first();
+
+    if (!loginUser) {
+      return res.status(400).json('User not found');
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, loginUser.hash);
+
+    if (isPasswordMatch) {
+      // res.json(user);
+      res.json('Login successful');
+    } else {
+      res.status(401).json('Invalid credentials');
+    }
+  } catch (err){
+    res.status(500).json('Server error');
+  }
 });
 
 module.exports = router;
