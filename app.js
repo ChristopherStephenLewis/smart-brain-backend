@@ -27,13 +27,3 @@ app.use('/image', imageRoute);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 })
-
-/*
-TODO
-1. error handling middleware
-2. static file serving (if required)
-3. logger middleware (such as morgan or can be made from scratch)
-4. environmental configuration (such as ports)
-5. CORS handling
-6. database integration
-*/

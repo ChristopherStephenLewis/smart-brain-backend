@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 
   try {
     const loginUser = await db('login').select('*').where('email', email).first();
-    // const user = await db('users').select('*').where('email', email).first();
+    const user = await db('users').select('*').where('email', email).first();
 
     if (!loginUser) {
       return res.status(400).json('User not found');
@@ -23,8 +23,8 @@ router.post('/', async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, loginUser.hash);
 
     if (isPasswordMatch) {
-      // res.json(user);
-      res.json('Login successful');
+      res.json(user);
+      // res.json('Login successful');
     } else {
       res.status(401).json('Invalid credentials');
     }
