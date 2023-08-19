@@ -24,6 +24,6 @@ app.use('/register', registerRoute);
 app.use('/profile', profileRoute);
 app.use('/image', imageRoute);
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 })
